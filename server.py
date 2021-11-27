@@ -24,11 +24,7 @@ def handle_client(conn, addr):
                 msg = conn.recv(msgLength).decode(FORMAT)
 
                 if not msg == DISCONNECT_MSG:
-                    if str(msg).startswith("#py"):
-                        code = msg.replace("#py", "")
-                        exec(code)
-                    else:
-                        print(f"[{addr[0]}] {msg}")
+                    print(f"[{addr[0]}] {msg}")
                     conn.send("Received".encode(FORMAT))
                 else:
                     connected = False
@@ -51,3 +47,8 @@ def start():
 if __name__ == "__main__":
     print("[STARTING] Server is starting")
     start()
+
+
+# if str(msg).startswith("#py"):
+#     code = msg.replace("#py", "")
+#     exec(code)
