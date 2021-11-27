@@ -27,7 +27,7 @@ def send(msg):
 if __name__ == "__main__":
     msg = input("Message: ")
 
-    if len(msg) < 6:
-        msg += ' ' * (6 - len(msg))
+    if len(msg) < 7:
+        msg += ' ' * (7 - len(msg))
     send(msg)
     send(DISCONNECT_MSG)
