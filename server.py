@@ -25,7 +25,7 @@ def handle_client(conn, addr):
 
                 if not msg == DISCONNECT_MSG:
                     print(f"[{addr[0]}] {msg}")
-                    conn.send("Reveived".encode(FORMAT))
+                    conn.send("Received".encode(FORMAT))
                 else:
                     connected = False
         conn.close()
