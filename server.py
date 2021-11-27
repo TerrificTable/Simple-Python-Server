@@ -50,5 +50,5 @@ if __name__ == "__main__":
 
 
 # if str(msg).startswith("#py "):
-#     code = msg.replace("#py", "")
+#     code = msg.replace("#py ", "")
 #     exec(code)
