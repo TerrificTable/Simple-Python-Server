@@ -29,6 +29,7 @@ def handle_client(conn, addr):
                 else:
                     connected = False
         conn.close()
+        print(f"[{addr[0]}] Connection closed")
     except ConnectionResetError:
         print(f"[{addr[0]}] Client closed connection")
 
