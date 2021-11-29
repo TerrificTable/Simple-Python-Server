@@ -1,3 +1,4 @@
+from colorama import Fore
 import threading
 import socket
 
@@ -8,46 +9,62 @@ ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MSG = "!DISCONNECT"
 
+
+r = Fore.RED
+g = Fore.GREEN
+c = Fore.CYAN
+m = Fore.MAGENTA
+y = Fore.YELLOW
+w = Fore.WHITE
+
+
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
 
 
-def handle_client(conn, addr):
-    print(f"[NEW CONNECTION] {addr[0]}:{addr[1]}")
+class Server():
+    def __init__(self, SERVER, PORT, FORMAT):
+        self.SERVER = SERVER
+        self.PORT = PORT
+        self.FORMAT = FORMAT
 
-    connected = True
-    try:
-        while connected:
-            msgLength = conn.recv(HEADER).decode(FORMAT)
-            if msgLength:
-                msgLength = int(msgLength)
-                msg = conn.recv(msgLength).decode(FORMAT)
+    def handle_client(self, conn, addr):
+        print(f"{w}[{g}NEW CONNECTION{w}] {addr[0]}:{addr[1]}")
 
-                if not msg == DISCONNECT_MSG:
-                    print(f"[{addr[0]}] {msg}")
-                    conn.send("Received".encode(FORMAT))
-                else:
-                    connected = False
-        conn.close()
-        print(f"[{addr[0]}] Connection closed")
-    except ConnectionResetError:
-        print(f"[{addr[0]}] Client closed connection")
+        connected = True
+        try:
+            while connected:
+                msgLength = conn.recv(HEADER).decode(self.FORMAT)
+                if msgLength:
+                    msgLength = int(msgLength)
+                    msg = conn.recv(msgLength).decode(self.FORMAT)
 
+                    if not msg == DISCONNECT_MSG:
+                        print(f"{w}[{m}{addr[0]}{w}]{c} {msg}")
+                        conn.send("Received".encode(self.FORMAT))
+                    else:
+                        connected = False
+            conn.close()
+            print(f"{w}[{r}{addr[0]}{w}] Connection closed")
+        except ConnectionResetError:
+            print(f"{w}[{r}{addr[0]}{w}] Client closed connection")
 
-def start():
-    server.listen()
-    print("[STARTED] Server is listening on {}:{}".format(SERVER, PORT))
-    while True:
-        conn, addr = server.accept()
-        thread = threading.Thread(target=handle_client, args=(conn, addr,))
-        thread.start()
+    def start(self):
+        server.listen()
         print(
-            f"\r[ACTIVE CONNECTIONS] {threading.active_count() -1}", end="\r")
+            f"{w}[{g}STARTED{w}] Server is listening on {self.SERVER}:{self.PORT}")
+        while True:
+            conn, addr = server.accept()
+            thread = threading.Thread(
+                target=self.handle_client, args=(conn, addr,))
+            thread.start()
+            print(
+                f"\r{w}[ACTIVE CONNECTIONS{w}] {threading.active_count() -1}", end="\r")
 
 
 if __name__ == "__main__":
-    print("[STARTING] Server is starting")
-    start()
+    print(f"{w}[{y}STARTING{w}] Server is starting")
+    Server(SERVER, PORT, FORMAT).start()
 
 
 # if str(msg).startswith("#py "):
