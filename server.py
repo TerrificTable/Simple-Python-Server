@@ -1,3 +1,5 @@
+import os
+from plyer import notification
 from colorama import Fore
 import threading
 import socket
@@ -8,6 +10,11 @@ SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MSG = "!DISCONNECT"
+NOTIFICATION_MSG = "!NOTIFY"
+ERRORO_MSG = "!ERROR"
+
+errTitle = f" ran into an error"
+# icon = f"{os.getcwd()}icon.ico"
 
 
 r = Fore.RED
@@ -20,6 +27,11 @@ w = Fore.WHITE
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
+
+
+def notify(title, message, icon=None):
+    notification.notify(title=title, message=message,
+                        app_icon=icon, timeout=10)
 
 
 class Server():
@@ -35,11 +47,21 @@ class Server():
         try:
             while connected:
                 msgLength = conn.recv(HEADER).decode(self.FORMAT)
+
                 if msgLength:
                     msgLength = int(msgLength)
                     msg = conn.recv(msgLength).decode(self.FORMAT)
 
                     if not msg == DISCONNECT_MSG:
+                        if str(msg).startswith(NOTIFICATION_MSG):
+                            msg = str(msg).replace(NOTIFICATION_MSG, "")
+                            notify("["+str(addr[0])+"] sent Notification", msg)
+
+                        elif str(msg).startswith(ERRORO_MSG):
+                            msg = str(msg).replace(ERRORO_MSG, "")
+                            notify("["+str(addr[0])+"] ran into an ERROR", msg)
+                            msg = f"{w}[{r}ERROR{w}]: " + msg
+
                         print(f"{w}[{m}{addr[0]}{w}]{c} {msg}")
                         conn.send("Received".encode(self.FORMAT))
                     else:
@@ -53,6 +75,7 @@ class Server():
         server.listen()
         print(
             f"{w}[{g}STARTED{w}] Server is listening on {self.SERVER}:{self.PORT}")
+
         while True:
             conn, addr = server.accept()
             thread = threading.Thread(
