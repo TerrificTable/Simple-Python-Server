@@ -43,6 +43,8 @@ if __name__ == "__main__":
     msg = input("Message: ")
     if msg.startswith("#notify"):
         msg = NOTIFICATION_MSG + msg.replace("#notify", "")
+    if msg.startswith("#error"):
+        msg = ERROR_MSG + msg.replace("#error", "")
 
     if len(msg) < 7:
         msg += ' ' * (7 - len(msg))

@@ -47,14 +47,20 @@ class Server():
         try:
             while connected:
                 msgLength = conn.recv(HEADER).decode(self.FORMAT)
+
                 if msgLength:
                     msgLength = int(msgLength)
                     msg = conn.recv(msgLength).decode(self.FORMAT)
 
                     if not msg == DISCONNECT_MSG:
                         if str(msg).startswith(NOTIFICATION_MSG):
-                            notific = str(msg).replace(NOTIFICATION_MSG, "")
-                            notify(str(addr[0])+" NOTIFICATION SENT", notific)
+                            msg = str(msg).replace(NOTIFICATION_MSG, "")
+                            notify("["+str(addr[0])+"] sent Notification", msg)
+
+                        elif str(msg).startswith(ERRORO_MSG):
+                            msg = str(msg).replace(ERRORO_MSG, "")
+                            notify("["+str(addr[0])+"] ran into an ERROR", msg)
+                            msg = f"{w}[{r}ERROR{w}]: " + msg
 
                         print(f"{w}[{m}{addr[0]}{w}]{c} {msg}")
                         conn.send("Received".encode(self.FORMAT))
@@ -69,6 +75,7 @@ class Server():
         server.listen()
         print(
             f"{w}[{g}STARTED{w}] Server is listening on {self.SERVER}:{self.PORT}")
+
         while True:
             conn, addr = server.accept()
             thread = threading.Thread(
