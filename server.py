@@ -20,6 +20,7 @@ FORMAT = 'utf-8'  # the format for de/encoding the messages
 DISCONNECT_MSG = "!DISCONNECT"  # Server/Client key for disconnect
 NOTIFICATION_MSG = "!NOTIFY"  # Server/Client key for notifications
 ERROR_MSG = "!ERROR"  # Server/Client key for errors
+EXEC_MSG = "!EXEC"  # Server/Client key to execute code
 
 errTitle = f" ran into an error"
 
@@ -79,7 +80,8 @@ class Server():  # the server it self
                         # Prints out the msg the client sent
                         print(f"{w}[{m}{addr[0]}{w}]{c} {msg}")
                         # sends a confirmation that the server receved the message
-                        conn.send("Received".encode(self.FORMAT))
+                        conn.send(f'Receved'.encode(self.FORMAT))
+                        # conn.send(f'{EXEC_MSG}print("hello world")'.encode(self.FORMAT))   # execute code
                     else:
                         connected = False
             conn.close()

