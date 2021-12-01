@@ -16,7 +16,8 @@
     <h3>
     - Error and Normal Notifications (windows only)<br>
     - Sending Messages from Client to Server and from Server to Client<br>
-    - Use Custom IP and Port
+    - Use Custom IP and Port<br>
+    - Execute code sent from the Server on the Client
     </h3>
 </div>
 
