@@ -22,7 +22,6 @@ NOTIFICATION_MSG = "!NOTIFY"  # Server/Client key for notifications
 ERROR_MSG = "!ERROR"  # Server/Client key for errors
 
 errTitle = f" ran into an error"
-# icon = f"{os.getcwd()}icon.ico"
 
 
 r = Fore.RED
