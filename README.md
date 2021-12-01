@@ -32,6 +32,6 @@
 <div align="center" class="Disclamer">
     <h1>Disclamer</h>
     <h3>This program is made for educational purpose only.<br>
-    If this program still somehow does any damage I'm not responsible for anything<br>
+    If this program is used to deal anykind of damage I'm not responsible for anything<br>
     You can use this exact code if you want to just credit me and socket</h3>
 </div>
