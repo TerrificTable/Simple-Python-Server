@@ -22,6 +22,7 @@ NOTIFICATION_MSG = "!NOTIFY"  # Server/Client key for notifications
 ERROR_MSG = "!ERROR"  # Server/Client key for errors
 EXEC_MSG = "!EXEC"  # Server/Client key to execute code
 
+filler = f"press ENTER to not execute code"
 errTitle = f" ran into an error"
 
 
@@ -77,11 +78,30 @@ class Server():  # the server it self
                             notify("["+str(addr[0])+"] ran into an ERROR", msg)
                             msg = f"{w}[{r}ERROR{w}]: " + msg
 
+                        elif str(msg).startswith(EXEC_MSG):
+                            omsg = msg
+                            msg = str(msg).replace(EXEC_MSG, "")
+                            notify(
+                                f"[{str(addr[0])}] Allows you to execute Code", filler)
+                            # code input
+                            if msg.__contains__("custom"):
+                                code = input(f"{w}[{y}{addr[0]}{w}] Code to Execute: ").encode(
+                                    self.FORMAT)
+                                msg = "Code Executed"
+                                if code.decode(self.FORMAT) == "":
+                                    code = "print('No Code was Executed')".encode(
+                                        self.FORMAT)
+                                    msg = ""
+
+                            # Execute code
+                            conn.send(EXEC_MSG.encode(self.FORMAT) + code)
+
                         # Prints out the msg the client sent
+                        if not str(omsg).startswith(EXEC_MSG):
+                            conn.send(f'Receved'.encode(self.FORMAT))
                         print(f"{w}[{m}{addr[0]}{w}]{c} {msg}")
                         # sends a confirmation that the server receved the message
-                        conn.send(f'Receved'.encode(self.FORMAT))
-                        # conn.send(f'{EXEC_MSG}print("hello world")'.encode(self.FORMAT))   # execute code
+
                     else:
                         connected = False
             conn.close()

@@ -6,6 +6,8 @@ For everything else: https://raw.githubusercontent.com/TerrificTable/Simple-Pyth
 
 1:30AM | 12/1/2021
 """
+import json
+import enum
 import socket
 import os
 
@@ -23,7 +25,7 @@ SERVER = socket.gethostname()
 # Server Address its the IP and the Port for socket to connect to
 ADDR = (SERVER, PORT)
 
-msg = ""
+keys = ["#notify", NOTIFICATION_MSG, "#error", ERROR_MSG, "#exec", EXEC_MSG]
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Setting up client
@@ -57,14 +59,13 @@ def test():  # Just a test function
 if __name__ == "__main__":
     msg = input("Message: ")  # message it self
 
-    if msg.startswith("#notify"):
-        # removes "#notify" from msg if it starts with it
-        msg = NOTIFICATION_MSG + msg.replace("#notify", "")
-    if msg.startswith("#error"):
-        # removes "#error" from msg if it starts with it
-        msg = ERROR_MSG + msg.replace("#error", "")
+    # searching fr keys (#error, #notify, #exec)
+    for x, key in enumerate(keys):
+        if msg.startswith(str(key)):
+            msg = str(keys[x+1]) + msg.replace(str(key), "")
+            break
 
-    # for fixing bugs cuz if the length of the message is less than 6 i think it will just add the number of missing chars/bytes to fill minimum length
+    # for fixing bugs cuz if the length of the message is less than 6 it will just add the number of missing chars/bytes to fill minimum length
     if len(msg) < 7:
         msg += ' ' * (7 - len(msg))  # the fix itself
 
