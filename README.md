@@ -23,7 +23,7 @@
 <div align="center" class="ToDo">
     <h1>ToDo</h>
     <h3>
-    - Allow the server to execute code on the Client<br>
+    - <s>Allow the server to execute code on the Client</s><br>
     - Fixing the Client count itself<br>
     - Cleaning up code
     </h3>
