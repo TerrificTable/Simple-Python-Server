@@ -1,3 +1,11 @@
+'''
+This Code was Written by TerrificTable55™#5297 (https://github.com/TerrificTable)
+If you want to use this don't remove this or/and add me to credits
+You can sell this code if you want just credit me
+For everything else: https://raw.githubusercontent.com/TerrificTable/Simple-Python-Server/main/LICENSE  |  https://github.com/TerrificTable/Simple-Python-Server/blob/main/LICENSE
+
+1:30AM | 12/1/2021
+'''
 from plyer import notification
 from colorama import Fore
 import threading
