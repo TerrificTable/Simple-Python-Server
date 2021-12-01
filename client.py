@@ -6,8 +6,6 @@ For everything else: https://raw.githubusercontent.com/TerrificTable/Simple-Pyth
 
 1:30AM | 12/1/2021
 """
-import json
-import enum
 import socket
 import os
 

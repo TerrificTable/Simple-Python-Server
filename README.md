@@ -21,6 +21,20 @@
     </h3>
 </div>
 
+<div align="center" class="Guid">
+    <h1>Guide</h>
+    <h3>To execute code send: ```#exec custom``` from the client to the server<br>
+    To show a notification on the server send: ```#notify [content]```<br>
+    To send an Error to the server (in case you want to run it to remotly manage a client running a program) send: ```#error [error/content]```</h3>
+</div>
+
+<div align="center" class="Installation">
+    <h1>Installation</h>
+    <h3>Git clone this repo ```git clone https://github.com/TerrificTable/Simple-Python-Server```<br>
+    Install all requirements ```python -m pip install colorama plyer```<br>
+    And then just run the server file and the rest should be clear</h3>
+</div>
+
 <div align="center" class="ToDo">
     <h1>ToDo</h>
     <h3>
