@@ -64,6 +64,7 @@ class Server():  # the server it self
                     msgLength = int(msgLength)
                     # waits for a message with the from client sent msg length
                     msg = conn.recv(msgLength).decode(self.FORMAT)
+                    omsg = msg
 
                     if not msg == DISCONNECT_MSG:  # if the client doesn't disconnects
                         # if the message starts with the notification key
